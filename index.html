@@ -199,10 +199,27 @@ kbd{font-family:inherit;background:#2c2130;border:1px solid #6b5326;border-botto
 #toast.show{opacity:1}
 .credit{position:absolute;bottom:1.5%;right:2.5%;font-size:11px;color:#6e6250;letter-spacing:1px;z-index:5;pointer-events:none}
 
-/* ---------- 手机横屏：满屏 + UI 等比缩小 ---------- */
+/* ---------- 手机竖屏：舞台直接旋转90°，横屏UI铺满 ---------- */
+@media (orientation:portrait) and (pointer:coarse) and (max-width:760px){
+  #stage{
+    position:fixed;left:50%;top:50%;
+    width:min(100vh,calc(100vw*16/9));
+    height:min(100vw,calc(100vh*9/16));
+    transform:translate(-50%,-50%) rotate(90deg);
+    border-radius:0;box-shadow:none;
+  }
+  @supports (height:1dvh){
+    #stage{width:min(100dvh,calc(100vw*16/9));height:min(100vw,calc(100dvh*9/16))}
+  }
+}
+/* ---------- 手机横屏：满屏 ---------- */
 @media (orientation:landscape) and (pointer:coarse) and (max-height:520px){
   #stage{width:min(100vw,calc(100vh*16/9));border-radius:0;box-shadow:none}
   @supports (height:1dvh){#stage{width:min(100vw,calc(100dvh*16/9))}}
+}
+/* ---------- 手机 UI 等比缩小（横屏 & 竖屏旋转共用） ---------- */
+@media (orientation:landscape) and (pointer:coarse) and (max-height:520px),
+       (orientation:portrait) and (pointer:coarse) and (max-width:760px){
   .ov{zoom:.72}
   .ttitle{letter-spacing:7px;gap:10px}
   .tsub{font-size:15px}
@@ -233,30 +250,6 @@ kbd{font-family:inherit;background:#2c2130;border:1px solid #6b5326;border-botto
   #tHorn{bottom:12%}
   #tSlide{bottom:7%}
   #tBreath{bottom:7%}
-}
-
-/* ---------- 手机竖屏：旋转引导 ---------- */
-#rotate{
-  display:none;position:fixed;inset:0;z-index:99;
-  background:radial-gradient(900px 600px at 50% 35%, #241a29, #0b090d 75%);
-  flex-direction:column;align-items:center;justify-content:center;gap:20px;
-  text-align:center;padding:36px 28px;cursor:pointer;
-}
-#rotate .rphone{
-  width:52px;height:92px;border:3.5px solid var(--gold);border-radius:12px;position:relative;
-  animation:rspin 1.7s ease-in-out infinite;
-}
-#rotate .rphone::after{
-  content:"";position:absolute;bottom:7px;left:50%;transform:translateX(-50%);
-  width:16px;height:3px;border-radius:2px;background:var(--gold);
-}
-@keyframes rspin{0%,18%{transform:rotate(0)}55%,100%{transform:rotate(-90deg)}}
-#rotate b{font-size:24px;letter-spacing:6px;color:var(--gold2);text-shadow:0 0 20px rgba(217,164,65,.4)}
-#rotate span{font-size:15px;letter-spacing:3px;color:#c9bda0;line-height:1.9}
-#rotate i{font-size:12.5px;letter-spacing:2px;color:#8d7f66;font-style:normal;
-  border:1px solid rgba(217,164,65,.4);border-radius:30px;padding:7px 20px}
-@media (orientation:portrait) and (pointer:coarse) and (max-width:760px){
-  #rotate{display:flex}
 }
 </style>
 </head>
@@ -418,14 +411,6 @@ kbd{font-family:inherit;background:#2c2130;border:1px solid #6b5326;border-botto
   </div>
   <div id="toast"></div>
   <div class="credit">比赛原型 · 楚音少年</div>
-</div>
-
-<!-- 竖屏旋转引导（手机） -->
-<div id="rotate">
-  <div class="rphone"></div>
-  <b>请将手机横过来</b>
-  <span>「楚音少年」为横屏游戏<br>旋转手机后即可开始传习</span>
-  <i>点击此处：进入全屏并锁定横屏</i>
 </div>
 
 <script>
@@ -1912,14 +1897,6 @@ const bgmKick=()=>{
 };
 window.addEventListener('pointerdown',bgmKick);
 window.addEventListener('keydown',bgmKick);
-/* 手机竖屏引导：点击尝试全屏并锁定横屏（部分浏览器不支持则手动旋转） */
-$('#rotate').addEventListener('pointerdown',async()=>{
-  AU.init();AU.resume();
-  try{if(!document.fullscreenElement&&document.documentElement.requestFullscreen)
-    await document.documentElement.requestFullscreen({navigationUI:'hide'})}catch(e){}
-  try{if(screen.orientation&&screen.orientation.lock)
-    await screen.orientation.lock('landscape')}catch(e){}
-});
 refreshTitle();
 requestAnimationFrame(loop);
 </script>
