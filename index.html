@@ -107,6 +107,69 @@ body{
 .chip.cur{border-color:var(--gold2);box-shadow:0 0 14px rgba(217,164,65,.45)}
 .tfoot{margin-top:26px;font-size:11.5px;letter-spacing:1px;color:#8d7f66}
 .tfoot a{color:#a08a5f;cursor:pointer;text-decoration:underline dotted}
+.tfoot a.payLink{color:#d9a441;border-color:rgba(217,164,65,.55)}
+
+/* ---------- 支付 ---------- */
+#pay{background:rgba(6,4,9,.78);align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.payWrap{display:flex;gap:26px;align-items:stretch;text-align:left;max-width:720px}
+.payInfo{flex:1;min-width:220px;display:flex;flex-direction:column;justify-content:center}
+.payInfo h2{font-size:34px;color:var(--gold2);letter-spacing:10px;text-shadow:0 2px 12px rgba(217,164,65,.35);margin:4px 0 10px;text-align:left}
+.payPrice{
+  display:flex;align-items:baseline;gap:8px;margin:8px 0 14px;
+  color:#f7e8c8;
+}
+.payPrice .yen{font-size:22px;color:var(--gold)}
+.payPrice .num{font-size:52px;font-weight:bold;letter-spacing:2px;color:var(--gold2);text-shadow:0 0 18px rgba(217,164,65,.4)}
+.payPrice .unit{font-size:14px;letter-spacing:3px;color:#caa46a}
+.payList{list-style:none;margin:0 0 8px;padding:0}
+.payList li{
+  font-size:14.5px;line-height:1.85;color:#d8c9a6;padding-left:1.1em;position:relative;
+}
+.payList li::before{content:"◆";position:absolute;left:0;top:0;font-size:10px;color:var(--gold);transform:translateY(6px)}
+.payHint{margin-top:12px;font-size:12.5px;line-height:1.8;color:#a08a5f;border-top:1px dashed rgba(217,164,65,.3);padding-top:10px}
+.payQrCard{
+  width:248px;flex:none;background:linear-gradient(180deg,#f7f7f7,#efefef);
+  border:1px solid rgba(217,164,65,.55);border-radius:12px;padding:14px 14px 12px;
+  box-shadow:0 0 0 5px #0b090d,0 0 0 6px rgba(217,164,65,.28),0 18px 50px rgba(0,0,0,.65);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.payWxTag{
+  display:flex;align-items:center;gap:6px;font-size:13px;letter-spacing:2px;color:#07c160;font-weight:bold;
+}
+.payWxTag i{
+  width:18px;height:18px;border-radius:50%;background:#07c160;color:#fff;font-style:normal;
+  display:inline-flex;align-items:center;justify-content:center;font-size:12px;line-height:1;
+}
+.payQr{
+  width:210px;height:210px;background:#fff;border-radius:8px;overflow:hidden;
+  border:1px solid #ddd;display:flex;align-items:center;justify-content:center;
+}
+.payQr img{width:100%;height:100%;object-fit:contain;display:block}
+.payName{font-size:13px;color:#333;letter-spacing:1px;text-align:center;line-height:1.5}
+.payAmtBadge{
+  margin-top:2px;background:linear-gradient(180deg,#c2452c,#8f2d1c);color:#f7e8c8;
+  border:1px solid #d9a441;border-radius:20px;padding:3px 14px;font-size:13px;letter-spacing:2px;
+}
+.payActions{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap;width:100%}
+.payDoneNote{
+  display:none;margin-top:10px;padding:8px 12px;border-radius:6px;font-size:13px;letter-spacing:1px;
+  background:rgba(217,164,65,.12);border:1px solid rgba(217,164,65,.4);color:var(--gold2);text-align:center;
+}
+.payDoneNote.show{display:block}
+@media (max-width:700px),(max-height:560px){
+  #pay{align-items:flex-start;overflow-y:auto;padding:12px 8px}
+  #pay>.panel{margin:auto;width:min(100%,520px);padding:18px 16px}
+  .payWrap{flex-direction:column;align-items:center;width:100%}
+  .payInfo{min-width:0;width:100%;text-align:center}
+  .payInfo h2{text-align:center;font-size:28px;letter-spacing:8px}
+  .payPrice{justify-content:center}
+  .payList li{text-align:left;font-size:14px}
+  .payQrCard{width:min(248px,86vw)}
+  .payQr{width:min(210px,74vw);height:min(210px,74vw)}
+  .payActions{margin-top:14px}
+  .btn{font-size:17px;padding:10px 22px;letter-spacing:4px}
+  .btn2{font-size:15px;padding:9px 18px}
+}
 .tright{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:16px;max-width:44%}
 .artframe{
   width:min(42vw,430px);aspect-ratio:16/10.4;border-radius:10px;overflow:hidden;
@@ -236,8 +299,13 @@ kbd{font-family:inherit;background:#2c2130;border:1px solid #6b5326;border-botto
   .dskip{font-size:16px;padding:4px 12px}
   .credit{display:none}
   /* 内容超高时可滚动（margin:auto 保证居中且不裁切顶部） */
-  #howto,#atlas,#clear,#fail,#pause,#ending{align-items:flex-start;overflow-y:auto;padding:2% 0}
-  #howto>.panel,#atlas>div,#clear>.panel,#fail>.panel,#pause>.panel,#ending>.panel{margin:auto}
+  #howto,#atlas,#clear,#fail,#pause,#ending,#pay{align-items:flex-start;overflow-y:auto;padding:2% 0}
+  #howto>.panel,#atlas>div,#clear>.panel,#fail>.panel,#pause>.panel,#ending>.panel,#pay>.panel{margin:auto}
+  .payWrap{flex-direction:column;align-items:center;max-width:100%}
+  .payInfo{text-align:center;min-width:0;width:100%}
+  .payInfo h2{text-align:center}
+  .payPrice{justify-content:center}
+  .payList li{text-align:left}
   .hcol{min-width:240px}
   .acards{max-width:100%;gap:10px}
   .acard{width:230px;padding:10px 13px}
@@ -267,9 +335,10 @@ kbd{font-family:inherit;background:#2c2130;border:1px solid #6b5326;border-botto
         <button class="btn" id="bStart">开始传习</button>
         <button class="btn btn2" id="bHow">玩法说明</button>
         <button class="btn btn2" id="bAtlas">曲牌图鉴</button>
+        <button class="btn btn2" id="bPay">项目接管</button>
       </div>
       <div class="lchips" id="lchips"></div>
-      <div class="tfoot">唢呐艺术（呜音喇叭）· 2008年入选首批国家级非物质文化遗产名录 · 湖北南漳　<a id="resetSave">清空进度</a></div>
+      <div class="tfoot">唢呐艺术（呜音喇叭）· 2008年入选首批国家级非物质文化遗产名录 · 湖北南漳　<a id="resetSave">清空进度</a>　<a id="payFoot" class="payLink">¥200 永久接管</a></div>
     </div>
     <div class="tright">
       <div class="artframe"><img src="assets/run.png" alt="楚小欢与楚小念"></div>
@@ -399,6 +468,39 @@ kbd{font-family:inherit;background:#2c2130;border:1px solid #6b5326;border-botto
         <button class="btn" id="pResume">继续跑</button>
         <button class="btn btn2" id="pRestart">重来这一课</button>
         <button class="btn btn2" id="pHome">回山门</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 支付 / 项目接管 -->
+  <div class="ov" id="pay">
+    <div class="panel" style="max-width:760px;padding:26px 34px">
+      <div class="ptag">永久使用权</div>
+      <div class="payWrap">
+        <div class="payInfo">
+          <h2>接管本项目</h2>
+          <div class="payPrice">
+            <span class="yen">¥</span><span class="num">200</span><span class="unit">一次付清 · 永久</span>
+          </div>
+          <ul class="payList">
+            <li>支付 ¥200，即可获得《楚音少年》项目永久使用权</li>
+            <li>含全部关卡、图鉴、音效与美术资源源码</li>
+            <li>可自行部署、修改、二次开发与发布</li>
+            <li>微信扫码支付，备注「接管项目」</li>
+          </ul>
+          <div class="payHint">支付完成后，请保留转账凭证，并联系项目方完成交接（仓库权限 / 源码移交）。静态页面无法自动核销，请以实际到账为准。</div>
+          <div class="payDoneNote" id="payDoneNote">已记录你的支付意向。请完成微信扫码付款，并凭凭证联系项目方完成交接。</div>
+        </div>
+        <div class="payQrCard">
+          <div class="payWxTag"><i>✓</i> 微信支付</div>
+          <div class="payQr"><img src="assets/pay-qr.png" alt="微信收款码" draggable="false"></div>
+          <div class="payName">A 胜天半子(**宁)</div>
+          <div class="payAmtBadge">应付 ¥200</div>
+        </div>
+      </div>
+      <div class="payActions">
+        <button class="btn" id="payDone">我已支付</button>
+        <button class="btn btn2" id="payClose">返回山门</button>
       </div>
     </div>
   </div>
@@ -903,7 +1005,7 @@ $('#dlg').addEventListener('pointerdown',e=>{if(e.target.id==='dskip')return;dlg
 $('#dskip').addEventListener('pointerdown',e=>{e.stopPropagation();dlgSkip()});
 
 /* ================= 屏幕切换 ================= */
-const SCREENS=['title','howto','atlas','clear','fail','ending','pause'];
+const SCREENS=['title','howto','atlas','clear','fail','ending','pause','pay'];
 function showScreen(id){SCREENS.forEach(s=>$('#'+s).classList.toggle('show',s===id))}
 function hideScreens(){SCREENS.forEach(s=>$('#'+s).classList.remove('show'))}
 let toastT=null;
@@ -1851,6 +1953,19 @@ $('#bHow').addEventListener('click',()=>{AU.init();AU.sClick();showScreen('howto
 $('#howClose').addEventListener('click',()=>{AU.sClick();showScreen('title')});
 $('#bAtlas').addEventListener('click',()=>{AU.init();AU.sClick();renderAtlas();showScreen('atlas')});
 $('#atlasClose').addEventListener('click',()=>{AU.sClick();showScreen('title')});
+function openPay(){
+  AU.init();AU.sClick();
+  $('#payDoneNote').classList.remove('show');
+  showScreen('pay');
+}
+$('#bPay').addEventListener('click',openPay);
+$('#payFoot').addEventListener('click',openPay);
+$('#payClose').addEventListener('click',()=>{AU.sClick();showScreen('title')});
+$('#payDone').addEventListener('click',()=>{
+  AU.sClick();AU.sGold();
+  $('#payDoneNote').classList.add('show');
+  toast('支付意向已记录，请凭凭证完成交接');
+});
 $('#cNext').addEventListener('click',()=>{
   AU.sClick();
   if(LV<5)startLevel(LV+1);
